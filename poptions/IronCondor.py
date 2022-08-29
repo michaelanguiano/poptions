@@ -14,6 +14,10 @@ def bsm_debit(sim_price, strikes, rate, time_fraction, sigma):
 
     debit = P_short_calls - P_long_calls + P_short_puts - P_long_puts
 
+    # 19Jul22
+    # Added this print statement to try to figure out why I am getting zero POP
+    #print("POP BSM Debit: " , debit)
+
     return debit
 
 
@@ -23,6 +27,8 @@ def ironCondor(underlying, sigma, rate, trials, days_to_expiration,
                call_short_price, call_long_strike, call_long_price):
 
     # Data Verification
+    # 18Jul22 - this fails but I don't know why long/short price comparison matters
+    # 19Jul22 - I uncommented this today and now it works - maybe there is something with new issues over the weekend?
     if call_long_price >= call_short_price:
         raise ValueError("Long call price cannot be greater than or "
                                                         "equal to Short call price")
@@ -31,6 +37,7 @@ def ironCondor(underlying, sigma, rate, trials, days_to_expiration,
         raise ValueError("Short call strike cannot be greater than or "
                                                           "equal to Long call strike")
 
+    # 18Jul22 - this fails but I don't know why long/short price comparison matters
     if put_long_price >= put_short_price:
         raise ValueError("Long put price cannot be greater than or "
                                                        "equal to Short put price")
